@@ -2,6 +2,24 @@ import pandas as pd
 from flask import Flask, request, jsonify
 import joblib
 import numpy as np
+import os
+import urllib.request
+
+def download_file(url, filename):
+    if not os.path.exists(filename):
+        try:
+            print(f"Téléchargement de {filename} depuis {url}...")
+            # Télécharge le fichier
+            urllib.request.urlretrieve(url, filename)
+            print(f"Le fichier {filename} a été téléchargé avec succès.")
+        except Exception as e:
+            print(f"Erreur lors du téléchargement : {e}")
+    else:
+        print(f"Le fichier {filename} existe déjà.")
+
+# Download the csv files
+download_file('https://www.admandev.fr/application_train.csv', 'application_train.csv')
+download_file('https://www.admandev.fr/application_test.csv', 'application_test.csv')
 
 app = Flask(__name__)
 
